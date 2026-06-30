@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Paper & Ink — a modern blog</title>
+    <!-- Google Fonts for refined typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet" />
+    <style>
+        /* — reset & base — */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #f6f3ef;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: #1e1b1a;
+            padding: 2rem 1.5rem;
+            line-height: 1.6;
+        }
+
+        .wrapper {
+            max-width: 1140px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 2.5rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.06), 0 8px 24px rgba(0, 0, 0, 0.02);
+            padding: 2.5rem 2.5rem 2rem;
+            transition: box-shadow 0.25s;
+        }
+
+        /* — header — */
+        .blog-header {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: baseline;
+            justify-content: space-between;
+            padding-bottom: 1.75rem;
+            border-bottom: 2px solid #f0ebe5;
+            margin-bottom: 2.5rem;
+        }
+
+        .brand {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .brand h1 {
+            font-family: 'DM Serif Display', serif;
+            font-weight: 400;
+            font-size: 2.2rem;
+            letter-spacing: -0.3px;
+            line-height: 1.1;
+        }
+
+        .brand h1 a {
+            text-decoration: none;
+            color: #1e1b1a;
+            transition: color 0.2s;
+        }
+
+        .brand h1 a:hover {
+            color: #a65a3a;
+        }
+
+        .brand .tagline {
+            font-size: 0.85rem;
+            font-weight: 400;
+            color: #6f6a64;
+            letter-spacing: 0.4px;
+            margin-top: 2px;
+            text-transform: uppercase;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            font-weight: 500;
+            font-size: 0.95rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #2b2622;
+            padding: 0.25rem 0;
+            border-bottom: 2px solid transparent;
+            transition: border-color 0.2s, color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: #a65a3a;
+            border-bottom-color: #dbb8a4;
+        }
+
+        .nav-links a.active {
+            color: #a65a3a;
+            border-bottom-color: #a65a3a;
+            font-weight: 600;
+        }
+
+        /* — featured hero — */
+        .featured-hero {
+            background: #f9f5f0;
+            border-radius: 2rem;
+            padding: 2.2rem 2.5rem;
+            margin-bottom: 3rem;
+            border: 1px solid #ede7e0;
+            transition: background 0.2s;
+        }
+
+        .featured-hero .meta-tag {
+            display: inline-block;
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            color: #6f5e4e;
+            background: #e8dfd6;
+            padding: 0.2rem 1rem;
+            border-radius: 30px;
+            margin-bottom: 0.75rem;
+        }
+
+        .featured-hero h2 {
+            font-family: 'DM Serif Display', serif;
+            font-size: 2.8rem;
+            font-weight: 400;
+            letter-spacing: -0.5px;
+            line-height: 1.15;
+            margin-bottom: 0.8rem;
+        }
+
+        .featured-hero h2 a {
+            text-decoration: none;
+            color: #1e1b1a;
+            transition: color 0.2s;
+        }
+
+        .featured-hero h2 a:hover {
+            color: #a65a3a;
+        }
+
+        .featured-hero .excerpt {
+            font-size: 1.15rem;
+            color: #3d3631;
+            max-width: 80%;
+            font-weight: 400;
+            margin-bottom: 1.2rem;
+        }
+
+        .featured-hero .byline {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.95rem;
+            color: #4b423c;
+        }
+
+        .featured-hero .byline strong {
+            font-weight: 600;
+            color: #1e1b1a;
+        }
+
+        .featured-hero .byline .dot {
+            color: #b7a79a;
+            font-weight: 300;
+        }
+
+        .featured-hero .byline .date {
+            color: #6f6a64;
+        }
+
+        /* — grid — */
+        .section-title {
+            font-family: 'DM Serif Display', serif;
+            font-weight: 400;
+            font-size: 1.6rem;
+            letter-spacing: -0.2px;
+            margin-bottom: 1.5rem;
+            color: #1e1b1a;
+            border-left: 5px solid #dbb8a4;
+            padding-left: 1rem;
+        }
+
+        .posts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0 1.8rem;
+        }
+
+        .post-card {
+            background: #fcfaf8;
+            border-radius: 1.5rem;
+            padding: 1.8rem 1.8rem 1.5rem;
+            border: 1px solid #eee8e2;
+            transition: transform 0.25s ease, box-shadow 0.3s, border-color 0.2s;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .post-card:hover {
+            transform: translateY(-6px);
+            border-color: #d0c2b6;
+            box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.08);
+        }
+
+        .post-card .card-meta {
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            color: #7a6e64;
+            margin-bottom: 0.6rem;
+        }
+
+        .post-card h3 {
+            font-family: 'DM Serif Display', serif;
+            font-weight: 400;
+            font-size: 1.5rem;
+            line-height: 1.2;
+            margin-bottom: 0.5rem;
+        }
+
+        .post-card h3 a {
+            text-decoration: none;
+            color: #1e1b1a;
+            transition: color 0.2s;
+        }
+
+        .post-card h3 a:hover {
+            color: #a65a3a;
+        }
+
+        .post-card .card-excerpt {
+            color: #3d3631;
+            font-size: 0.95rem;
+            margin-bottom: 1.2rem;
+            flex: 1;
+        }
+
+        .post-card .card-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-top: 1px solid #eee8e2;
+            padding-top: 1rem;
+            font-size: 0.85rem;
+            color: #4b423c;
+        }
+
+        .post-card .card-footer .author-name {
+            font-weight: 500;
+            color: #1e1b1a;
+        }
+
+        .post-card .card-footer .read-time {
+            background: #ede7e0;
+            padding: 0.2rem 0.9rem;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            font-weight: 500;
+            color: #4f443c;
+            letter-spacing: 0.2px;
+        }
+
+        /* — newsletter signup (realistic touch) — */
+        .newsletter-banner {
+            background: #f2ede7;
+            border-radius: 1.8rem;
+            padding: 1.8rem 2.2rem;
+            margin: 2.5rem 0 2rem;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            border: 1px solid #e3dbd2;
+        }
+
+        .newsletter-banner p {
+            font-size: 1rem;
+            font-weight: 450;
+            color: #2b2622;
+        }
+
+        .newsletter-banner p strong {
+            font-weight: 600;
+            color: #1e1b1a;
+        }
+
+        .newsletter-banner .btn-sub {
+            background: #1e1b1a;
+            color: white;
+            border: none;
+            padding: 0.6rem 1.8rem;
+            border-radius: 60px;
+            font-weight: 500;
+            font-size: 0.9rem;
+            cursor: default;
+            transition: background 0.2s, transform 0.1s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            letter-spacing: 0.3px;
+        }
+
+        .newsletter-banner .btn-sub:hover {
+            background: #a65a3a;
+            transform: scale(1.02);
+        }
+
+        /* — footer — */
+        .blog-footer {
+            margin-top: 2.5rem;
+            padding-top: 1.8rem;
+            border-top: 2px solid #f0ebe5;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9rem;
+            color: #5f554c;
+        }
+
+        .blog-footer a {
+            color: #2b2622;
+            text-decoration: none;
+            border-bottom: 1px dotted transparent;
+            transition: border-color 0.2s, color 0.2s;
+            font-weight: 450;
+        }
+
+        .blog-footer a:hover {
+            color: #a65a3a;
+            border-bottom-color: #dbb8a4;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        /* — responsive — */
+        @media (max-width: 800px) {
+            .wrapper {
+                padding: 1.8rem;
+                border-radius: 2rem;
+            }
+            .featured-hero .excerpt {
+                max-width: 100%;
+            }
+            .featured-hero h2 {
+                font-size: 2.2rem;
+            }
+            .newsletter-banner {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+        }
+
+        @media (max-width: 650px) {
+            body {
+                padding: 1rem 0.8rem;
+            }
+            .wrapper {
+                padding: 1.2rem;
+                border-radius: 1.5rem;
+            }
+            .blog-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.8rem;
+            }
+            .nav-links {
+                gap: 1.2rem;
+                font-size: 0.9rem;
+            }
+            .featured-hero {
+                padding: 1.5rem;
+            }
+            .featured-hero h2 {
+                font-size: 1.8rem;
+            }
+            .posts-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            .blog-footer {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.6rem;
+            }
+            .footer-links {
+                gap: 1.2rem;
+            }
+        }
+
+        @media (max-width: 420px) {
+            .featured-hero h2 {
+                font-size: 1.6rem;
+            }
+            .brand h1 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <!-- header -->
+        <header class="blog-header">
+            <div class="brand">
+                <h1><a href="#">Paper &amp; Ink</a></h1>
+                <span class="tagline">— a journal of ideas</span>
+            </div>
+            <div class="nav-links">
+                <a href="#" class="active">home</a>
+                <a href="#">articles</a>
+                <a href="#">about</a>
+                <a href="#">contact</a>
+            </div>
+        </header>
+
+        <!-- featured / hero -->
+        <article class="featured-hero">
+            <span class="meta-tag">✦ featured</span>
+            <h2><a href="#">The art of slow reading</a></h2>
+            <div class="excerpt">
+                Rediscover the pleasure of deep reading in a world of endless scrolling.
+                How patience transforms the way we absorb stories.
+            </div>
+            <div class="byline">
+                <strong>Clara Morrison</strong>
+                <span class="dot">·</span>
+                <span class="date">28 June 2026</span>
+                <span class="dot">·</span>
+                <span style="color:#6f6a64;">5 min read</span>
+            </div>
+        </article>
+
+        <!-- recent posts heading -->
+        <h2 class="section-title">Recent writings</h2>
+
+        <!-- grid of posts -->
+        <div class="posts-grid">
+            <!-- card 1 -->
+            <article class="post-card">
+                <div class="card-meta">📖 4 min</div>
+                <h3><a href="#">Morning pages: a ritual</a></h3>
+                <div class="card-excerpt">
+                    Three pages of stream-of-consciousness every morning —
+                    how this simple habit unlocks clarity.
+                </div>
+                <div class="card-footer">
+                    <span>by <span class="author-name">Ellis Park</span></span>
+                    <span class="read-time">22 June</span>
+                </div>
+            </article>
+
+            <!-- card 2 -->
+            <article class="post-card">
+                <div class="card-meta">🌿 6 min</div>
+                <h3><a href="#">Notes from a coastal walk</a></h3>
+                <div class="card-excerpt">
+                    Salt air, driftwood, and the sound of waves — a journal
+                    entry from a quiet afternoon by the sea.
+                </div>
+                <div class="card-footer">
+                    <span>by <span class="author-name">Morgan Hayes</span></span>
+                    <span class="read-time">19 June</span>
+                </div>
+            </article>
+
+            <!-- card 3 -->
+            <article class="post-card">
+                <div class="card-meta">☕ 3 min</div>
+                <h3><a href="#">The craft of zines</a></h3>
+                <div class="card-excerpt">
+                    Why small-batch, hand-made publications are thriving
+                    in the digital age. A conversation with makers.
+                </div>
+                <div class="card-footer">
+                    <span>by <span class="author-name">Riley Chen</span></span>
+                    <span class="read-time">16 June</span>
+                </div>
+            </article>
+
+            <!-- card 4 -->
+            <article class="post-card">
+                <div class="card-meta">📚 7 min</div>
+                <h3><a href="#">Rereading old favorites</a></h3>
+                <div class="card-excerpt">
+                    Returning to a book you loved years ago — how your
+                    perspective shifts, and what stays the same.
+                </div>
+                <div class="card-footer">
+                    <span>by <span class="author-name">Avery Stone</span></span>
+                    <span class="read-time">12 June</span>
+                </div>
+            </article>
+
+            <!-- card 5 -->
+            <article class="post-card">
+                <div class="card-meta">✍️ 5 min</div>
+                <h3><a href="#">Writing by hand</a></h3>
+                <div class="card-excerpt">
+                    The tactile pleasure of pen on paper, and why
+                    handwriting still matters for creativity.
+                </div>
+                <div class="card-footer">
+                    <span>by <span class="author-name">Jordan Lee</span></span>
+                    <span class="read-time">9 June</span>
+                </div>
+            </article>
+
+            <!-- card 6 -->
+            <article class="post-card">
+                <div class="card-meta">🌙 4 min</div>
+                <h3><a href="#">Night sketches</a></h3>
+                <div class="card-excerpt">
+                    A series of short vignettes captured after midnight —
+                    observations from a sleepless city.
+                </div>
+                <div class="card-footer">
+                    <span>by <span class="author-name">Taylor Kim</span></span>
+                    <span class="read-time">5 June</span>
+                </div>
+            </article>
+        </div>
+
+        <!-- newsletter / real‑world touch -->
+        <div class="newsletter-banner">
+            <p><strong>✉️  The Inkwell</strong> — our weekly letter with fresh stories &amp; recommendations.</p>
+            <span class="btn-sub">Subscribe</span>
+        </div>
+
+        <!-- footer -->
+        <footer class="blog-footer">
+            <div>
+                © 2026 <a href="#">Paper &amp; Ink</a> ·  thoughtful reading
+            </div>
+            <div class="footer-links">
+                <a href="#">rss</a>
+                <a href="#">twitter</a>
+                <a href="#">newsletter</a>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>
